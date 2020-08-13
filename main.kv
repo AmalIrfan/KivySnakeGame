@@ -1,0 +1,84 @@
+#: import random random.random
+#: import choice random.choice
+#: import const includes
+#: import FadeTransition kivy.uix.screenmanager.FadeTransition
+
+<Square>:
+    size:(const.SQUARE_SIZE,)*2
+    size_hint:None,None
+    bg_color:(0,0,0)
+    canvas.before:
+        Color:
+            rgb:self.bg_color
+        Rectangle:
+            size:self.size
+            pos:self.pos
+
+<Food>:
+    bg_color:choice(const.FOOD_COLORS)
+
+<SnakePart>:
+    bg_color:choice(const.SNAKE_COLORS)
+
+<GameScreen>:
+    canvas.before:
+        Color:
+            rgb:.1,.2,.2
+        Rectangle:
+            size:self.size
+        Color:
+            rgb:1,.7,0
+        Line:
+            dash_offset:10
+            dash_length:10
+            points:(self.x+1,self.y+1,self.x+1,self.y+1,self.right-1,self.y+1,self.right-1,self.top-1,self.x+1,self.top-1,self.x+1,self.y+1)
+
+<ScoreLabel>:
+    z:1
+
+<MenuButton@Button>:
+    size_hint:None,None
+    height:cm(1.25)
+    font_name:'DroidSansMono'
+    font_size:'40sp'
+    width:cm(4)
+    x:self.parent.width/2-self.width/2
+
+ScreenManager:
+    transition:FadeTransition()
+    Screen:
+        name:'main'
+        Label:
+            size_hint:1,None
+            id:title
+            font_name:'NotoSerif-Bold'
+            font_size:'40sp'
+            text:'Snake Kivy Scrible'
+            height:title.texture_size[1]
+            pos_hint:{'top':.9}
+        MenuButton:
+            text:'Newgame'
+            pos_hint:{'top':.7}
+            on_release:
+                app.start_game()
+                root.current = 'game'
+        MenuButton:
+            disabled:True
+            pos_hint:{'top':.6}
+            text:'Continue'
+        MenuButton:
+            pos_hint:{'top':.5}
+            text:'Help'
+        MenuButton:
+            pos_hint:{'top':.4}
+            text:'Settings'
+        MenuButton:
+            pos_hint:{'top':.3}
+            text:'About'
+        MenuButton:
+            pos_hint:{'top':.2}
+            text:'Exit'
+            on_release:app.stop()
+    GameScreen:
+        name:'game'
+        id:game
