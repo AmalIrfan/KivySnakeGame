@@ -23,7 +23,7 @@
 <GameScreen>:
     canvas.before:
         Color:
-            rgb:.1,.2,.2
+            rgb:.02,.17,.17
         Rectangle:
             size:self.size
         Color:
@@ -32,13 +32,11 @@
             dash_offset:10
             dash_length:10
             points:(self.x+1,self.y+1,self.x+1,self.y+1,self.right-1,self.y+1,self.right-1,self.top-1,self.x+1,self.top-1,self.x+1,self.y+1)
-
 <ScoreLabel>:
-    z:1
 
 <MenuButton@Button>:
     size_hint:None,None
-    height:cm(1.25)
+    height:cm(1.2)
     font_name:'DroidSansMono'
     font_size:'40sp'
     width:cm(4)
@@ -48,37 +46,56 @@ ScreenManager:
     transition:FadeTransition()
     Screen:
         name:'main'
-        Label:
-            size_hint:1,None
+        canvas.before:
+            Color:
+                rgb:.02,.17,.17
+            Rectangle:
+                size:self.size
+            Color:
+                rgb:1,.7,0
+            Line:
+                dash_offset:10
+                dash_length:10
+                points:(self.x+1,self.y+1,self.x+1,self.y+1,self.right-1,self.y+1,self.right-1,self.top-1,self.x+1,self.top-1,self.x+1,self.y+1)
+        Image:
+            source:'title.png'
+            size_hint:None,None
+            allow_stretch:True
+            keep_ratio:True
             id:title
-            font_name:'NotoSerif-Bold'
-            font_size:'40sp'
-            text:'Snake Kivy Scrible'
-            height:title.texture_size[1]
-            pos_hint:{'top':.9}
+            height:title.texture_size[0]
+            width:self.parent.width - 50
+            pos_hint:{'top':1,}
+            x:self.parent.width/2-self.width/2
         MenuButton:
-            text:'Newgame'
-            pos_hint:{'top':.7}
+            background_normal:'newgame.png'
+            background_down:'newgame_d.png'
+            pos_hint:{'top':.575}
             on_release:
                 app.start_game()
                 root.current = 'game'
         MenuButton:
-            disabled:True
-            pos_hint:{'top':.6}
-            text:'Continue'
+            background_normal:'continue.png'
+            background_down:'continue_d.png'
+            disabled:False
+            pos_hint:{'top':.48}
         MenuButton:
-            pos_hint:{'top':.5}
-            text:'Help'
+            pos_hint:{'top':.385}
+            background_normal:'help.png'
+            background_down:'help_d.png'
         MenuButton:
-            pos_hint:{'top':.4}
-            text:'Settings'
+            pos_hint:{'top':.29}
+            background_normal:'settings.png'
+            background_down:'settings_d.png'
         MenuButton:
-            pos_hint:{'top':.3}
-            text:'About'
+            pos_hint:{'top':.195}
+            background_normal:'about.png'
+            background_down:'about_d.png'
         MenuButton:
-            pos_hint:{'top':.2}
-            text:'Exit'
-            on_release:app.stop()
+            pos_hint:{'top':.1}
+            background_normal:'exit.png'
+            background_down:'exit_d.png'
+            on_release:app.stop() 
     GameScreen:
         name:'game'
         id:game

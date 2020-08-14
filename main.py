@@ -90,14 +90,12 @@ class GameScreen(Screen):
         # Check if snake collide with snake
         for part in self.snake_parts[1:]:
             if self.widgets_collides(part,head):
-                print(part)
                 main.game_over()
                 return False
 
         # Check if snake collide with walls
         if head.x < 0 or head.right > self.right\
         or head.y < 0 or head.top > self.top:
-            print('w')
             main.game_over()
             return False
         self.score_label.text= str(len(self.snake_parts)-1)
@@ -119,7 +117,6 @@ class GameScreen(Screen):
                 # Move left
                 self.movement_x = -self.step_size if not self.movement_x else self.movement_x
         else:
-            print('ud')
             # Move up or down
             self.movement_x = 0
             if dy < 0:
@@ -149,7 +146,7 @@ class MainApp(App):
     here runs self.root.new() and schedules
     self.root.next_frame() to run every 1/4 of
     a second in the function on_start'''
-    
+
     # finished
     def start_game(self):
         self.root.ids.game.new()
